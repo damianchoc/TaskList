@@ -3,10 +3,8 @@ package com.damian.TaskList.model;
 import lombok.Getter;
 import lombok.Setter;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
+import java.util.List;
 
 @Entity
 public class Task {
@@ -14,6 +12,17 @@ public class Task {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
+
+    public List<Komentarz> getKomentarze() {
+        return komentarze;
+    }
+
+    public void setKomentarze(List<Komentarz> komentarze) {
+        this.komentarze = komentarze;
+    }
+
+    @OneToMany(mappedBy = "task")
+    private List<Komentarz> komentarze;
 
     private String message;
 

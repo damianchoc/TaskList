@@ -10,6 +10,7 @@
     <tr th:each="task : ${listaTaskow}">
         <td th:text="${task.id}"></td>
         <td th:text="${task.message}"></td>
+
        <!--  <td><a th:href="@{'/update/{id}'(id=${task.id})}"/></td> -->
         <td><a th:href="@{/update/} + ${task.id}">edytuj</a></td>
     </tr>
