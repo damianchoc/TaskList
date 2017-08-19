@@ -1,6 +1,8 @@
 package com.damian.TaskList.controller;
 
+import com.damian.TaskList.dao.KomentarzDAO;
 import com.damian.TaskList.dao.TaskDAO;
+import com.damian.TaskList.model.Komentarz;
 import com.damian.TaskList.model.Task;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -19,6 +21,8 @@ public class TaskController {
 
     @Autowired
     private TaskDAO taskDao;
+    @Autowired
+    private KomentarzDAO komentarzDao;
 
     @RequestMapping(value="/listaTaskow")
     public String listaTaskow(Model model){
@@ -45,5 +49,35 @@ public class TaskController {
 
         return new ModelAndView("redirect:/listaTaskow");
     }
+
+    @RequestMapping(value="/task/{id}")
+    public String task(Model model, @PathVariable Long id){
+        Task task = taskDao.findOne(id);
+        List<Komentarz> komentarze = new ArrayList<>();
+        komentarze = task.getKomentarze();
+        model.addAttribute("task",task);
+        model.addAttribute("komentarze", komentarze);
+        return "task";
+    }
+
+    @RequestMapping(value="/addKomentarz/{id}")
+    public String dodajKomentarz(Model model, @PathVariable Long id){
+        Task task = taskDao.findOne(id);
+        model.addAttribute("task",task);
+        Komentarz komentarz = new Komentarz();
+        model.addAttribute("komentarz", komentarz);
+        return "addKomentarz";
+    }
+
+    @RequestMapping(value="/saveKomentarz/{id}", method=RequestMethod.POST)
+    public ModelAndView saveKomentarz(@Valid Komentarz komentarz, @PathVariable Long id){
+        Task t = taskDao.findOne(id);
+        komentarz.setTask(t);
+        t.dodajKomentarz(komentarz);
+        taskDao.save(t);
+        komentarzDao.save(komentarz);
+        return new ModelAndView("redirect:/task/"+id);
+    }
+
 
 }

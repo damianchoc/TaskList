@@ -6,9 +6,17 @@ import javax.persistence.*;
 public class Komentarz {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    Long id;
+    private Long id;
 
-    String komentarz;
+    private String text;
+
+    public String getText() {
+        return text;
+    }
+
+    public void setText(String text) {
+        this.text = text;
+    }
 
     @ManyToOne
     private Task task;
@@ -29,11 +37,5 @@ public class Komentarz {
         this.id = id;
     }
 
-    public String getKomentarz() {
-        return komentarz;
-    }
 
-    public void setKomentarz(String komentarz) {
-        this.komentarz = komentarz;
-    }
 }

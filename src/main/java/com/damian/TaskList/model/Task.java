@@ -21,6 +21,11 @@ public class Task {
         this.komentarze = komentarze;
     }
 
+    public void dodajKomentarz(Komentarz komentarz){
+       komentarz.setTask(this);
+       komentarze.add(komentarz);
+    }
+
     @OneToMany(mappedBy = "task")
     private List<Komentarz> komentarze;
 

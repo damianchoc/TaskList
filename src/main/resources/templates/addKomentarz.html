@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8"/>
+    <title>dodaj komentarz</title>
+</head>
+<body>
+<form ACTION="addKomentarz" th:action="@{/saveKomentarz/} + ${task.id}" th:object="${komentarz}" method="POST">
+    <input type="text" th:field="*{text}"/>
+    <input type="hidden" th:field="*{id}"/>
+    <!-- <input type="hidden" th:field="${task.id}"/> -->
+    <button type="submit">Wyslij</button>
+</form>
+</body>
+</html>

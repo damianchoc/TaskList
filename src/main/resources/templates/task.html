@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Komentarze taska</title>
+</head>
+<body>
+<span th:text="${task.id}"></span><br/><span th:text="${task.message}"></span><br/>
+<table>
+    <tr>
+        <td>id</td>
+        <td>komentarz</td>
+    </tr>
+    <tr th:each="komentarz : ${komentarze}">
+        <td th:text="${komentarz.id}"></td>
+        <td th:text="${komentarz.text}"></td>
+    </tr>
+</table>
+<br/>
+<p><a th:href="@{/addKomentarz/} + ${task.id}">Dodaj komentarz</a></p>
+<br/>
+<p><a th:href="@{/listaTaskow}">Powrot do listy Taskow</a></p>
+<br/>
+</body>
+</html>
