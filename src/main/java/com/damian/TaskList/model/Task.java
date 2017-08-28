@@ -4,6 +4,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
+import javax.validation.constraints.Size;
 import java.util.List;
 
 @Entity
@@ -29,6 +30,7 @@ public class Task {
     @OneToMany(mappedBy = "task")
     private List<Komentarz> komentarze;
 
+    @Size(min=3, max=20, message = "Musi zawierac od 3 do 20 znakow")
     private String message;
 
     public Long getId() {

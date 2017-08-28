@@ -7,8 +7,11 @@ import com.damian.TaskList.model.Task;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
 import javax.websocket.server.PathParam;
@@ -44,9 +47,13 @@ public class TaskController {
     }
 
     @RequestMapping(value="/update", method=RequestMethod.POST)
-    public ModelAndView update2(@Valid Task task){
+    public ModelAndView update2(@Valid Task task, Errors errors){
+        if(errors.hasErrors()){
+//            redirectAttributes.addFlashAttribute("org.spingframework.validation.BindingResult.task", bind);
+//            redirectAttributes.addFlashAttribute("task",task);
+        return new ModelAndView("redirect:/update/"+task.getId());
+        }
         taskDao.save(task);
-
         return new ModelAndView("redirect:/listaTaskow");
     }
 
@@ -68,9 +75,10 @@ public class TaskController {
         model.addAttribute("komentarz", komentarz);
         return "addKomentarz";
     }
-
+//modelandview
     @RequestMapping(value="/saveKomentarz/{id}", method=RequestMethod.POST)
-    public ModelAndView saveKomentarz(@Valid Komentarz komentarz, @PathVariable Long id){
+    public ModelAndView saveKomentarz(@PathVariable Long id, Komentarz komentarz){
+//        model.
         Task t = taskDao.findOne(id);
         komentarz.setTask(t);
         t.dodajKomentarz(komentarz);
